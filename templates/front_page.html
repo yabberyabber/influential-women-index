@@ -1,0 +1,34 @@
+<html>
+<head>
+	<title>Influential Women Index</title>
+</head>
+<body>
+	<div class='content'>
+		<p class='intro_text'>
+{% if longintro %}
+			The goal of this project is to elevate the status of women by highlighting the accomplishments of influential women in the past.  All too often, the accomplishments of women are underemphasized so the goal of this project is to find women who are influential in any field, no matter what it is.  To get started, paste the url of any article into the search bar below and we will try to find relevant articles.
+{% else %}
+			Below are the results we've found.  If you'd like to do another search, post the url of the article in the box below and we will find more.
+{% endif %}
+		</p>
+		<div class='searchform' >
+			<form action='/search' method='get'>
+				<input type='text' name='query' />
+				<input type='submit' value='search' />
+			</form>
+		</div>
+{% if showresults %}
+		<div class='results'>
+	{% if results %}
+		{% for result in results %}
+			<a href='{{ result.url }}' ><h1>{{ result.title }}</h1></a>
+			{{ result.summary }}
+		{% endfor %}
+	{% else %}
+		No results found.  Try a different search.
+	{% endif %}
+		</div>
+{% endif %}
+	</div>
+</body>
+</html>
