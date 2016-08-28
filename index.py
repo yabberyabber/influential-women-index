@@ -1,13 +1,16 @@
+import DbInit
+import PageRank
 from flask import *
 from matching import Matcher
 import json
+import urllib2
+import get_freq_dict as get_freqy
 app = Flask( __name__ )
 
 @app.route( '/' )
 @app.route( '/search' )
 def handle_non_api_request():
     query = request.args.get( 'query', None )
-    print query
     template_args = {}
 
     if query:
@@ -25,5 +28,23 @@ def handle_non_api_request():
 @app.route( '/api' )
 def handle_api_request():
     query = request.args.get( 'query', None )
-    matches = Matcher().find_matches_for( query )
-    return json.dumps( matches )
+    if not query:
+      return {}
+    print "you know what dat query is"
+    print query
+    webpage = urllib2.urlopen( query ).read() 
+    print "calling michaels api"
+    text = michaels_text_api( webpage )
+    print "called michaels api"
+    bag_of_words = get_freqy.get_freq_dict( text )
+    
+    results = DbInit.lookup_table.query( bag_of_words )
+    print results
+    ret_list = []
+    for article_id in results:
+      article_title = DbInit.get_article_title_by_id( article_id )
+      article_url = DbInit.get_article_url_by_id( article_id )
+      article_summary = '#YOLOSWAG. AIN\'T NOTHIN BUT CHICKEN N GRAVY UP IN DIS BIATCH'
+      ret_list.append( { 'title': article_title, 'url': article_url, 'summary': article_summary } )
+    print ret_list
+    return ret_list
