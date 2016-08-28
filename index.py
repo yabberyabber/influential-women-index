@@ -57,7 +57,7 @@ def handle_api_request():
     for article_id in results:
       article_title = DbInit.article_db.get_article_title_by_id( article_id )
       article_url = DbInit.article_db.get_article_url_by_id( article_id )
-      article_summary = '#YOLOSWAG. AIN\'T NOTHIN BUT CHICKEN N GRAVY UP IN DIS BIATCH'
+      article_summary = DbInit.article_db.get_article_summary_by_id( article_id )
       ret_list.append( { 'title': article_title, 'url': article_url, 'summary': article_summary } )
     response = jsonify( json.dumps( ret_list ) )
     response.status_code = 200

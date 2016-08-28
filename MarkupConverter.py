@@ -47,5 +47,9 @@ def htmlToPlain( htmlText=None ):
    return reduce( lambda x, y: x + y, result )
 
       
-            
-
+def pandocHtmlToPlain( htmlText=None ):
+   if not htmlText:
+      raise TypeError( "Missing htmlText" )
+      
+   soup = BeautifulSoup( htmlText, "html.parser" )
+   return soup.get_text(strip=True)
