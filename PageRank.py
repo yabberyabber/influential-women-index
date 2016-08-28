@@ -38,6 +38,5 @@ class PageRank( object ):
     for word, freq_query in search_terms.iteritems():
       for doc, freq_doc in self.word_lookup_table[word].iteritems():
         score_dict[doc] += math.log((freq_query * freq_doc * self.weight_function(self.word_frequency[word])) + 1)
-    sorted_x = sorted(score_dict.items(), key=operator.itemgetter(0))
-    return dict(sorted(sorted_x, key=operator.itemgetter(1), reverse=True)[0:3])
+    return dict(sorted(score_dict.items(), key=operator.itemgetter(1), reverse=True)[0:3])
  
