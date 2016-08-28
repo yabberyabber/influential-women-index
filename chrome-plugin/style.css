@@ -1,0 +1,20 @@
+#noconflictbox {
+	width: 350px;
+	border: 1px solid black;
+	background: #66ffff;
+	right: 360px;
+}
+
+#noconflictlink {
+	position: absolute;
+	top: 10px; 
+	right: 100px;
+	width: 100px;
+}
+
+#noconflictowner {
+	position: absolute;
+	top: 10px; 
+	right: 360px;
+	width: 100px;
+}
