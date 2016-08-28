@@ -1,11 +1,12 @@
 from Database import WikiDb
 from PageRank import PageRank
+import math
 
 print "Added db init"
 
 def weight_function( frequency, tf, N ):
   #return 1.0 / frequency
-  return math.log(float(N)/frequency) * tf
+  return math.log(float(N)/frequency + 1) * tf
 
 article_json = [ ('wiki_json/female_explorers.json', 'Female Explorers'),
           ('wiki_json/women_nobel_laureates.json', 'Women Nobel Laureates'),
