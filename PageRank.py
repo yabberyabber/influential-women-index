@@ -10,9 +10,7 @@ class PageRank( object ):
     self.weight_function = weight_function
 
   def extract_topics( self, page_content ):
-    print "extracting topics"
     freq_dict = get_freq_dict.get_freq_dict( page_content )    
-    print "done extracting topics"
     return freq_dict
 
   def populate( self, page_content, page_id ):
