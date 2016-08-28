@@ -20,18 +20,18 @@ def get_freq_dict(text):
    text_list = text.split()
    content = [w for w in text_list if w.lower() not in stopwords]
    # make frequency dict
-   dict = {}
+   freq_dict = {}
    for x in content:
       if re.match("^[a-zA-Z]+$", x):
          stemmed = PorterStemmer().stem_word(x).lower()
-         if stemmed not in dict:
-            dict[stemmed] = 1
+         if stemmed not in freq_dict:
+            freq_dict[stemmed] = 1
          else:
-            dict[stemmed] += 1
+            freq_dict[stemmed] += 1
    # sort dict in descending order (big to small)
-   sorted_x = sorted(dict.items(), key=operator.itemgetter(0))
+   sorted_x = sorted(freq_dict.items(), key=operator.itemgetter(0))
    return_dict = sorted(sorted_x, key=operator.itemgetter(1), reverse=True)
-   return return_dict
+   return dict(return_dict)
 
 
 

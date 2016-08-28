@@ -1,5 +1,7 @@
 import collections
 import math
+import operator 
+import get_freq_dict
 
 class PageRank( object ):
   def __init__( self, weight_function ):
@@ -8,12 +10,12 @@ class PageRank( object ):
     self.weight_function = weight_function
 
   def extract_topics( self, page_content ):
-    newdict = collections.defaultdict( lambda: 0 )
-    for word in page_content.split():
-      newdict[ word ] += 1
-    return newdict 
+    print "extracting topics"
+    freq_dict = get_freq_dict.get_freq_dict( page_content )    
+    print "done extracting topics"
+    return freq_dict
 
-  def populate( self, page_content, page_category, page_id ):
+  def populate( self, page_content, page_id ):
     word_frequency_histogram = self.extract_topics( page_content )
     num_words = reduce( lambda x, y: x + y, word_frequency_histogram.values() )
 
@@ -32,13 +34,12 @@ class PageRank( object ):
     return weight_function( self.word_frequency[ word ] )
 
   def query( self, search_terms ):
+    print "querying!!!!"
     # search_terms bag of doc A (dict)
-    score_dict = defaultdict( lambda:0 )
+    score_dict = collections.defaultdict( lambda:0 )
     for word, freq_query in search_terms.iteritems():
-      for doc, freq_doc in word_lookup_table.iteritems():
-        score_dict[doc] += math.log(freq_query*freq_doc*self.weight_function(self.word_frequency[word]) + 1)
-
+      for doc, freq_doc in self.word_lookup_table[word].iteritems():
+        score_dict[doc] += math.log((freq_query * freq_doc * self.weight_function(self.word_frequency[word])) + 1)
     sorted_x = sorted(score_dict.items(), key=operator.itemgetter(0))
-    return sorted(sorted_x, key=operator.itemgetter(1), reverse=True)
-
+    return dict(sorted(sorted_x, key=operator.itemgetter(1), reverse=True)[0:3])
  
