@@ -1,8 +1,10 @@
 from PageRank import PageRank
+import math
 
-def weight_function( frequency ):
-  return 1.0 / frequency
-
+def weight_function( frequency, tf, N ):
+  #return 1.0 / frequency
+  return math.log(N/frequency) * tf
+  
 pr = PageRank( weight_function )
 page_content = 'the quick brown fox jumped over the lazy dog'
 page_category = 'Whatevs'
