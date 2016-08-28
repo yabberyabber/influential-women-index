@@ -54,7 +54,7 @@ def handle_api_request():
     results = DbInit.lookup_table.query( bag_of_words )
     print results
     ret_list = []
-    for article_id in results:
+    for article_id, score in sorted(results.items(), key=lambda x: x[1], reverse=True):
       article_title = DbInit.article_db.get_article_title_by_id( article_id )
       article_url = DbInit.article_db.get_article_url_by_id( article_id )
       article_summary = DbInit.article_db.get_article_summary_by_id( article_id )

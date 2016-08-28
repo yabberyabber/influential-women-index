@@ -1,20 +1,36 @@
 #noconflictbox {
-	width: 350px;
+	position: absolute;
+	width: 200px;
 	border: 1px solid black;
-	background: #66ffff;
+	background: rgb(241, 241, 241);
 	right: 360px;
+	font-size: 12px;
+	top: 90px;
+	right: 20px;
+	padding: 4px;
 }
 
 #noconflictlink {
 	position: absolute;
-	top: 10px; 
-	right: 100px;
-	width: 100px;
+	width: 200px;
+}
+
+img#noconflictlink {
+	width: 30px;
+	top: 60px;
+	right: 20px;
 }
 
 #noconflictowner {
 	position: absolute;
 	top: 10px; 
-	right: 360px;
-	width: 100px;
+	right: 10px;
+	width: 200px;
+	z-index: 99999999999999;
+}
+
+.noconflicth1 {
+	font-size: 20px;
+	display: block;
+	margin-top: 4px;
 }

@@ -1,12 +1,11 @@
 from Database import WikiDb
 from PageRank import PageRank
+import math
 
 print "Added db init"
 
 def weight_function( frequency, tf, N ):
-  #return 1.0 / frequency
-  import math
-  return math.log(float(N)/frequency) * tf
+  return math.log(float(N)/frequency + 1) * tf
 
 article_json = [ ('wiki_json/female_explorers.json', 'Female Explorers'),
           ('wiki_json/women_nobel_laureates.json', 'Women Nobel Laureates'),
@@ -16,7 +15,7 @@ article_json = [ ('wiki_json/female_explorers.json', 'Female Explorers'),
         ]
 
 article_db = WikiDb( article_json )
-lookup_table = PageRank( weight_function, len( article_db.db_entries() ) )
+lookup_table = PageRank( weight_function, len(article_db.article_id_to_metadata) )
 
 print "populating database"
 for entry in article_db.db_entries():

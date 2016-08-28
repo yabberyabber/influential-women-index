@@ -1,5 +1,5 @@
 $('body').prepend('<div id="noconflictowner">' +
-		'<div id="noconflictlink">Poop poop poop yay!</div >' +
+		'<img src="https://d30y9cdsu7xlg0.cloudfront.net/png/93071-200.png" id="noconflictlink" width="30px" />' +
 		'<div id="noconflictbox">Poop poop poop yay!</div >' +
 		'</div>');
 $('#noconflictlink').hide();
@@ -17,7 +17,7 @@ var searchUrl = 'https://localhost:5123/api?query=' + window.location.href;
 req = new XMLHttpRequest();
 req.open('GET', searchUrl);
 req.onload = function() {
-  alert( req.response );
+  //alert( req.response );
 	console.log("res loaded doing the thing");
 	$('#noconflictlink').show();
 	$('#noconflictbox').html(req.response);

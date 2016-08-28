@@ -3,8 +3,8 @@ import math
 
 def weight_function( frequency, tf, N ):
   #return 1.0 / frequency
-  return math.log(N/frequency) * tf
-  
+  return math.log(N/frequency + 1 ) * tf
+
 pr = PageRank( weight_function )
 page_content = 'the quick brown fox jumped over the lazy dog'
 page_category = 'Whatevs'
