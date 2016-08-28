@@ -19,7 +19,7 @@ def wikiToHtml( wikitext=None ):
    tempFile.close()
 
    os.system( bashCommand )
-   #os.system( 'rm temp.txt' )
+   os.system( 'rm temp.txt' )
 
    try:
       htmlFile = open( 'wiki.html', 'r' )
@@ -44,8 +44,7 @@ def htmlToPlain( htmlText=None ):
       return True
 
    result = filter( visible, data )
-
-   return result
+   return reduce( lambda x, y: x + y, result )
 
       
             

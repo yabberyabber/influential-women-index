@@ -5,6 +5,7 @@ from matching import Matcher
 import json
 import urllib2
 import get_freq_dict as get_freqy
+import MarkupConverter as michaels_text_api
 app = Flask( __name__ )
 
 @app.route( '/' )
@@ -34,7 +35,7 @@ def handle_api_request():
     print query
     webpage = urllib2.urlopen( query ).read() 
     print "calling michaels api"
-    text = michaels_text_api( webpage )
+    text = michaels_text_api.htmlToPlain( webpage )
     print "called michaels api"
     bag_of_words = get_freqy.get_freq_dict( text )
     
@@ -42,9 +43,10 @@ def handle_api_request():
     print results
     ret_list = []
     for article_id in results:
-      article_title = DbInit.get_article_title_by_id( article_id )
-      article_url = DbInit.get_article_url_by_id( article_id )
+      article_title = DbInit.article_db.get_article_title_by_id( article_id )
+      article_url = DbInit.article_db.get_article_url_by_id( article_id )
       article_summary = '#YOLOSWAG. AIN\'T NOTHIN BUT CHICKEN N GRAVY UP IN DIS BIATCH'
       ret_list.append( { 'title': article_title, 'url': article_url, 'summary': article_summary } )
-    print ret_list
-    return ret_list
+    response = jsonify( json.dumps( ret_list ) )
+    response.status_code = 200
+    return response
