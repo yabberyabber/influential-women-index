@@ -17,9 +17,14 @@ class Matcher( object ):
 		pass
 
 	def _vectorize_page( self ):
-		pass
+		DUMMY_BAG_OF_WORDS = {
+				'apple': 2,
+				'cat': 7,
+				'poop': 17 }
+		return { 'tf': DUMMY_BAG_OF_WORDS,
+				 'doc_len': 26 }
 
-	def _find_tf_idf_matches( self ):
+	def _find_tf_idf_matches( self, tf, doc_len ):
 		pass
 
 	def find_matches_for( self, url ):
