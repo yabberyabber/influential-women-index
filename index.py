@@ -54,14 +54,12 @@ def handle_api_request():
     results = DbInit.lookup_table.query( bag_of_words )
     print results
     ret_list = []
-    for article_id in results:
+    for article_id, score in sorted(results.items(), key=lambda x: x[1], reverse=True):
       article_title = DbInit.article_db.get_article_title_by_id( article_id )
       article_url = DbInit.article_db.get_article_url_by_id( article_id )
       article_summary = '#YOLOSWAG. AIN\'T NOTHIN BUT CHICKEN N GRAVY UP IN DIS BIATCH'
-      ret_list.append( { 'title': article_title, 'url': article_url, 'summary': article_summary } )
-    response = jsonify( json.dumps( ret_list ) )
-    response.status_code = 200
-    return response
+      ret_list.append( { 'title': article_title, 'url': article_url, 'summary': article_summary, 'score': score } )
+    return render_template( 'results.html', results=ret_list )
 
 if __name__ == '__main__':
   context = (cer, key)

@@ -4,10 +4,11 @@ import operator
 import get_freq_dict
 
 class PageRank( object ):
-  def __init__( self, weight_function ):
+  def __init__( self, weight_function, total_num_of_articles_in_data_base_ ):
     self.word_lookup_table = collections.defaultdict( lambda: collections.defaultdict( lambda: 0 ) )
     self.word_frequency = collections.defaultdict( lambda: 0 )
     self.weight_function = weight_function
+    self.total_num_of_articles_in_data_base_ = total_num_of_articles_in_data_base_
 
   def extract_topics( self, page_content ):
     freq_dict = get_freq_dict.get_freq_dict( page_content )    
@@ -37,6 +38,6 @@ class PageRank( object ):
     score_dict = collections.defaultdict( lambda:0 )
     for word, freq_query in search_terms.iteritems():
       for doc, freq_doc in self.word_lookup_table[word].iteritems():
-        score_dict[doc] += math.log((freq_query * freq_doc * self.weight_function(self.word_frequency[word])) + 1)
+        score_dict[doc] += math.log((freq_query * freq_doc * self.weight_function(self.word_frequency[word], freq_query, self.total_num_of_articles_in_data_base_)) + 1)
     return dict(sorted(score_dict.items(), key=operator.itemgetter(1), reverse=True)[0:3])
  
