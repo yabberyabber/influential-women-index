@@ -40,14 +40,13 @@ def handle_non_api_request():
 @app.route( '/api' )
 def handle_api_request():
     query = request.args.get( 'query', None )
-    print query
-    if not query or 'wikipedia' not in query:
+    if not query or 'google' in query:
       return {}
     print 'you know what dat query is'
     print query
     webpage = urllib2.urlopen( query ).read() 
     print 'calling michaels api'
-    text = michaels_text_api.htmlToPlain( webpage )
+    text = michaels_text_api.pandocHtmlToPlain( webpage )
     print 'called michaels api'
     bag_of_words = get_freqy.get_freq_dict( text )
     
@@ -58,10 +57,16 @@ def handle_api_request():
       article_title = DbInit.article_db.get_article_title_by_id( article_id )
       article_url = DbInit.article_db.get_article_url_by_id( article_id )
       article_summary = DbInit.article_db.get_article_summary_by_id( article_id )
-      ret_list.append( { 'title': article_title, 'url': article_url, 'summary': article_summary } )
-    response = jsonify( json.dumps( ret_list ) )
-    response.status_code = 200
-    return response
+      #ret_list.append( { 'title': article_title, 'url': article_url, 'summary': article_summary } )
+      article_div = '<div><h1><a href="%s">%s</a></h1><summary>%s</summary></div>' % ( article_url, article_title, article_summary )
+      ret_list.append( article_div )
+    #response = jsonify( json.dumps( ret_list ) )
+    #response.status_code = 200
+    datstring = "<div>"
+    for relevant_thing in ret_list:
+      datstring += relevant_thing
+    datstring += "</div>"
+    return datstring
 
 if __name__ == '__main__':
   context = (cer, key)
