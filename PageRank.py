@@ -1,5 +1,6 @@
 import collections
 import math
+import operator 
 
 class PageRank( object ):
   def __init__( self, weight_function ):
@@ -33,12 +34,12 @@ class PageRank( object ):
 
   def query( self, search_terms ):
     # search_terms bag of doc A (dict)
-    score_dict = defaultdict( lambda:0 )
+    score_dict = collections.defaultdict( lambda:0 )
     for word, freq_query in search_terms.iteritems():
-      for doc, freq_doc in word_lookup_table.iteritems():
-        score_dict[doc] += math.log(freq_query*freq_doc*self.weight_function(self.word_frequency[word]) + 1)
-
+      for doc, freq_doc in self.word_lookup_table[word].iteritems():
+        score_dict[doc] += math.log((freq_query * freq_doc * self.weight_function(self.word_frequency[word])) + 1)
     sorted_x = sorted(score_dict.items(), key=operator.itemgetter(0))
+    # print(score_dict)
     return sorted(sorted_x, key=operator.itemgetter(1), reverse=True)
 
  
