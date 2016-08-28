@@ -13,12 +13,13 @@ function positionTooltip(event){
 	//$('#noconflictbox').css({'position': 'absolute', 'top': tPosY, 'left': tPosX});
 };
 
-var searchUrl = 'http://localhost:5000/api?query=poop';
+var searchUrl = 'https://localhost:5123/api?query=' + window.location.href;
 req = new XMLHttpRequest();
 req.open('GET', searchUrl);
 req.onload = function() {
-	$('#noconflictlink').show();
+  alert( req.response );
 	console.log("res loaded doing the thing");
+	$('#noconflictlink').show();
 	$('#noconflictbox').html(req.response);
 
 	$('#noconflictlink').mouseenter( function( event ) {
